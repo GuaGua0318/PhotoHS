@@ -1,14 +1,18 @@
 import { Fragment } from "react";
 import Bg from "./components/ui/Bg";
-import Login from "./components/Login";
+import routers from "./router/router";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
+import Login from "./pages/Login";
 
 const App = () => {
-  return ( 
-    <Fragment>
-      <Bg/>
-      <Login/>
-    </Fragment>
-   );
+
+  const GetRouters = () => useRoutes(routers);
+  return (
+    < Router >
+     <Login/>
+      <GetRouters />
+    </Router >
+  );
 }
- 
+
 export default App;
