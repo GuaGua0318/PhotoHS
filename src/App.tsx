@@ -9,7 +9,6 @@ const App = () => {
   const GetRouters = () => useRoutes(routers);
   return (
     < Router >
-     <Login/>
       <GetRouters />
     </Router >
   );
