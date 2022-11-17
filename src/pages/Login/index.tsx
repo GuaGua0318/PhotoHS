@@ -1,6 +1,5 @@
 import './index.scss';
 import { Form, Input, Button } from 'antd-mobile'
-import { getRequest,postRequest } from '../../request/index';
 import { Fragment, useState } from 'react';
 import Bg from '../../components/ui/Bg';
 
@@ -13,10 +12,12 @@ const Login = () => {
   //登录
   const login = () => {
     let value = form.getFieldValue();
-    postRequest('http://localhost:3000/auth/login',value).then((res: any) => {
-      let token = res.data.token;
-      localStorage.setItem('token',token);
+    console.log(
+      fetch('http://localhost:3000').then((res) => {
+      return res.text();
     })
+    )
+    
   }
 
   //跳转登录

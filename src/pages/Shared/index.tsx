@@ -1,7 +1,7 @@
 import './index.scss';
 import { AddCircleOutline } from 'antd-mobile-icons'
-import { Space, Image, Button, ImageViewer, Dialog, ImageUploader, ImageUploadItem, PullToRefresh } from 'antd-mobile'
-import { useState } from 'react';
+import { Space, Image, Button, ImageViewer, Dialog, ImageUploader, ImageUploadItem, PullToRefresh, TextArea } from 'antd-mobile'
+import { useEffect, useRef, useState } from 'react';
 import { sleep } from '../../utils/sleep';
 import imgDetail from '../../components/imgDetail';
 
@@ -16,13 +16,17 @@ const Shared = () => {
     'https://images.unsplash.com/photo-1567945716310-4745a6b7844b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3113&q=80',
     'https://images.unsplash.com/photo-1624993590528-4ee743c9896e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=1000&q=80',
   ]
+  const [value, setValue] = useState('');
+  const [visible, setVisible] = useState(false);
+  const [disabled,setDisabled] = useState(false);
 
   //上传的图片
   const [fileList, setFileList] = useState<ImageUploadItem[]>([
     {
-      url: demoSrc,
+      url: demoSrc
     },
   ])
+  
   //上传图片
   async function mockUpload(file: File) {
     await sleep(3000)
@@ -31,7 +35,17 @@ const Shared = () => {
     }
   }
 
-  const [visible, setVisible] = useState(false)
+  //确定上传
+  const handleUpload = () => {
+    
+  }
+
+  useEffect(() => {
+    if(fileList.length < 1){
+      setDisabled(true);
+    }
+  },[fileList])
+  
 
   return (
     <div className='shared'>
@@ -40,25 +54,29 @@ const Shared = () => {
         <div className='icon'>
           <Space wrap style={{ fontSize: 36 }}
             onClick={() => {
-              Dialog.alert({
-                header: (
-                  <ImageUploader
-                    value={fileList}
-                    onChange={setFileList}
-                    upload={mockUpload}
-                    maxCount={1}
-                  />
-                ),
-                title: '注意',
-                content: (
-                  <>
-                    <div>请用手机拍摄手持工牌照，注意保持照片清晰</div>
-                    <div>
-                      详情说明请查阅<a>操作指引</a>
-                    </div>
-                  </>
-                ),
-              })
+              setVisible(true)
+              // Dialog.confirm({
+              //   header: (
+              //     <ImageUploader
+              //       value={fileList}
+              //       onChange={setFileList}
+              //       upload={mockUpload}
+              //       maxCount={1}
+              //     />
+              //   ),
+              //   content: (
+              //     <>
+              //       <TextArea
+              //         placeholder='请输入内容'
+              //         value={value}
+              //         onChange={val => {
+              //           setValue(val)
+              //         }}
+              //       />
+              //     </>
+              //   ),
+              //   closeOnMaskClick: true
+              // })
             }}
           >
             <AddCircleOutline color='#76c6b8' />
@@ -67,59 +85,59 @@ const Shared = () => {
       </div>
       <div className='imgs'>
         <PullToRefresh>
-        <div className="imagesContainer">
-          <Space wrap>
-            <Image onClick={() => {
-              setVisible(true)
-            }} lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-            <Image lazy src={demoSrc} />
-          </Space>
-        </div>
+          <div className="imagesContainer">
+            <Space wrap>
+              <Image onClick={() => {
+                setVisible(true)
+              }} lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+              <Image lazy src={demoSrc} />
+            </Space>
+          </div>
         </PullToRefresh>
-        
+
       </div>
       <ImageViewer.Multi
         images={demoImages}
@@ -129,6 +147,34 @@ const Shared = () => {
           setVisible(false)
         }}
         renderFooter={imgDetail}
+      />
+      <Dialog
+        visible={visible}
+        header={<ImageUploader
+                 value={fileList}
+                 onChange={setFileList}
+                 upload={mockUpload}
+                 maxCount={1}
+               />}
+        content={<TextArea
+                   placeholder='请输入内容'
+                   value={value}
+                   onChange={val => {
+                     setValue(val)
+                   }}
+                 />}
+        closeOnAction
+        onClose={() => {
+          setVisible(false)
+        }}
+        actions={[
+          {
+            key: 'confirm',
+            text: '确认上传',
+            onClick:() => handleUpload(),
+            disabled:disabled
+          },
+        ]}
       />
     </div>
   );
