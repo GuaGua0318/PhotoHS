@@ -1,8 +1,8 @@
 import './index.scss';
-import { Form, Input, Button } from 'antd-mobile'
+import { Form, Input, Button, Toast } from 'antd-mobile'
 import { Fragment, useState } from 'react';
 import Bg from '../../components/ui/Bg';
-import { PostLoginApi } from '../../axios/api';
+import { PostLoginApi, PostRegisterApi } from '../../axios/api';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -10,16 +10,38 @@ const Login = () => {
   const [form] = Form.useForm();
   const [isLogin,setIsLogin] = useState(true);
   const navigate = useNavigate();
+  const avator = "https://img2.baidu.com/it/u=3094149767,177600321&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
 
-
+  
   //登录
   const login = () => {
-    let value = form.getFieldValue();
-    console.log()
-    PostLoginApi(value).then((res:any) => {
+    let user = form.getFieldsValue();
+    PostLoginApi(user).then((res:any) => {
       let token = res.data.data.token;
       localStorage.setItem('token',token);
       navigate('/shared');
+    }).catch(() => {
+      Toast.show({
+        icon: 'fail',
+        content: '账号或密码错误',
+      })
+    })
+  }
+
+  //注册
+  const register = () => {
+    let user = form.getFieldsValue();
+    PostRegisterApi({...user,avator:avator,nickname:"guagua"}).then((res:unknown) => {
+      toLogin();
+      Toast.show({
+        icon: 'success',
+        content: '注册成功，请登录'
+      })
+    }).catch(() => {
+      Toast.show({
+        icon: 'fail',
+        content: '用户名已经注册',
+      })
     })
   }
 
@@ -46,6 +68,7 @@ const Login = () => {
           </Button>
         }
         form={form}
+        onValuesChange={(value) => console.log(value)}
         onFinish={() => login()}
       >
         <Form.Item label='用户名' name='username' rules={[{required: true, message: '请输入用户名'}]}>
@@ -68,7 +91,7 @@ const Login = () => {
           </Button>
         }
         form={form}
-        onFinish={() => login()}
+        onFinish={() => register()}
       >
         <Form.Item label='用户名' name='username' rules={[{required: true, message: '请输入用户名'}]}>
           <Input placeholder='请输入用户名' clearable />

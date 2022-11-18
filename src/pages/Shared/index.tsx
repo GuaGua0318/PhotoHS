@@ -1,10 +1,10 @@
 import './index.scss';
 import { AddCircleOutline, AppOutline, UnorderedListOutline } from 'antd-mobile-icons'
-import { Space, Image, ImageViewer, Dialog, ImageUploader, ImageUploadItem, PullToRefresh, TextArea, TabBar, Badge } from 'antd-mobile'
+import { Space, Image, ImageViewer, Dialog, ImageUploader, ImageUploadItem, PullToRefresh, TextArea, TabBar, Badge, DotLoading } from 'antd-mobile'
 import { useEffect, useState } from 'react';
 import { sleep } from '../../utils/sleep';
 import imgDetail from '../../components/imgDetail';
-import { PostSharedAddApi } from '../../axios/api';
+import { PostSharedAddApi, GetSharedAllApi } from '../../axios/api';
 import { useNavigate } from 'react-router-dom';
 
 const Shared = () => {
@@ -14,12 +14,7 @@ const Shared = () => {
   const demoSrc =
     'https://images.unsplash.com/photo-1567945716310-4745a6b7844b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=60'
 
-  const demoImages = [
-    'https://images.unsplash.com/photo-1620476214170-1d8080f65cdb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3150&q=80',
-    'https://images.unsplash.com/photo-1601128533718-374ffcca299b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3128&q=80',
-    'https://images.unsplash.com/photo-1567945716310-4745a6b7844b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3113&q=80',
-    'https://images.unsplash.com/photo-1624993590528-4ee743c9896e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=1000&q=80',
-  ]
+  const [Images,setImages] = useState<[]>([]);
 
   const tabs = [
     {
@@ -38,6 +33,7 @@ const Shared = () => {
 
   const [value, setValue] = useState('');
   const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
   const [disabled,setDisabled] = useState(false);
 
   //上传的图片
@@ -56,9 +52,17 @@ const Shared = () => {
   }
 
   //确定上传
+  interface Photo{
+    img: String,
+    detail: String
+  }
   const handleUpload = () => {
-    PostSharedAddApi({"img":"11111","detail":"22222"}).then((res:any) => {
-      console.log(res)
+    let photo : Photo = {
+      img:demoSrc,
+      detail:value
+    }
+    PostSharedAddApi(photo).then((res:any) => {
+      AllPhoto();
     })
   }
 
@@ -67,6 +71,17 @@ const Shared = () => {
       setDisabled(true);
     }
   },[fileList])
+
+  //请求所有共享图片
+  const AllPhoto = () => {
+    GetSharedAllApi().then((res:any) => {
+      setImages(res.data.data);
+    })
+  }
+
+  useEffect(() => {
+    AllPhoto();
+  },[]);
   
   //切换tabbar
   const changeTab = (key:unknown) => {
@@ -85,28 +100,6 @@ const Shared = () => {
           <Space wrap style={{ fontSize: 36 }}
             onClick={() => {
               setVisible(true)
-              // Dialog.confirm({
-              //   header: (
-              //     <ImageUploader
-              //       value={fileList}
-              //       onChange={setFileList}
-              //       upload={mockUpload}
-              //       maxCount={1}
-              //     />
-              //   ),
-              //   content: (
-              //     <>
-              //       <TextArea
-              //         placeholder='请输入内容'
-              //         value={value}
-              //         onChange={val => {
-              //           setValue(val)
-              //         }}
-              //       />
-              //     </>
-              //   ),
-              //   closeOnMaskClick: true
-              // })
             }}
           >
             <AddCircleOutline color='#76c6b8' />
@@ -117,53 +110,14 @@ const Shared = () => {
         <PullToRefresh>
           <div className="imagesContainer">
             <Space wrap>
-              <Image onClick={() => {
-                setVisible(true)
-              }} lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
-              <Image lazy src={demoSrc} />
+              {
+                Images.length === 0 ? <DotLoading /> : 
+                  Images.map((item:any) => {
+                    return(
+                      <Image lazy src={item.img} key={item.id} onClick={() => setVisible2(true)} />
+                    )
+                  })
+              }
             </Space>
           </div>
         </PullToRefresh>
@@ -175,13 +129,17 @@ const Shared = () => {
           ))}
         </TabBar>
       <ImageViewer.Multi
-        images={demoImages}
-        visible={visible}
+        images={
+          Images.map((item:any) => {
+            return item.img
+          })
+        }
+        visible={visible2}
         defaultIndex={1}
         onClose={() => {
-          setVisible(false)
+          setVisible2(false)
         }}
-        renderFooter={imgDetail}
+        renderFooter={() => imgDetail(Images)}
       />
       <Dialog
         visible={visible}
@@ -205,7 +163,7 @@ const Shared = () => {
         actions={[
           {
             key: 'confirm',
-            text: '确认上传',
+            text: '确认发布',
             onClick:() => handleUpload(),
             disabled:disabled
           },
