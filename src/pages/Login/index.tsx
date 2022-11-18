@@ -2,22 +2,25 @@ import './index.scss';
 import { Form, Input, Button } from 'antd-mobile'
 import { Fragment, useState } from 'react';
 import Bg from '../../components/ui/Bg';
+import { PostLoginApi } from '../../axios/api';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
   const [form] = Form.useForm();
   const [isLogin,setIsLogin] = useState(true);
+  const navigate = useNavigate();
 
 
   //登录
   const login = () => {
     let value = form.getFieldValue();
-    console.log(
-      fetch('http://localhost:3000').then((res) => {
-      return res.text();
+    console.log()
+    PostLoginApi(value).then((res:any) => {
+      let token = res.data.data.token;
+      localStorage.setItem('token',token);
+      navigate('/shared');
     })
-    )
-    
   }
 
   //跳转登录

@@ -4,6 +4,7 @@ import { Space, Image, Button, ImageViewer, Dialog, ImageUploader, ImageUploadIt
 import { useEffect, useRef, useState } from 'react';
 import { sleep } from '../../utils/sleep';
 import imgDetail from '../../components/imgDetail';
+import { PostSharedAddApi } from '../../axios/api';
 
 const Shared = () => {
 
@@ -37,7 +38,9 @@ const Shared = () => {
 
   //确定上传
   const handleUpload = () => {
-    
+    PostSharedAddApi({"img":"11111","detail":"22222"}).then((res:any) => {
+      console.log(res)
+    })
   }
 
   useEffect(() => {
