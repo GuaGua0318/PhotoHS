@@ -1,0 +1,44 @@
+.my{
+  .bottom{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: pink;
+  }
+  .hd{
+    height: 50px;
+    background-color: pink;
+    text-align: center;
+    line-height: 50px;
+    font-size: 22px;
+  }
+  .detail{
+    height: 80px;
+    background-color: yellowgreen;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    .avator{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: green;
+    }
+    .nick{
+      font-size: 18px;
+      margin-left: 10px;
+      margin-top: -15px;
+    }
+  }
+  .photo{
+    .Imgs{
+      height: 800px;
+      overflow: scroll;
+      .imagesContainer {
+        --adm-image-width: 175px;
+        --adm-image-height: 100px;
+      }
+    }
+  }
+}
