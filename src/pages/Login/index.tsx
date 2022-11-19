@@ -11,14 +11,15 @@ const Login = () => {
   const [isLogin,setIsLogin] = useState(true);
   const navigate = useNavigate();
   const avator = "https://img2.baidu.com/it/u=3094149767,177600321&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
-
   
   //登录
   const login = () => {
     let user = form.getFieldsValue();
     PostLoginApi(user).then((res:any) => {
       let token = res.data.data.token;
+      let info = res.data.data.info;
       localStorage.setItem('token',token);
+      localStorage.setItem('info',JSON.stringify(info));
       navigate('/shared');
     }).catch(() => {
       Toast.show({

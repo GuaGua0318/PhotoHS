@@ -1,19 +1,16 @@
-import { useEffect } from 'react';
+import res from 'antd-mobile-icons/es/AaOutline';
+import { useEffect, useState } from 'react';
+import { GetSharedAllApi } from '../../axios/api';
 import './index.scss';
-const imgDetail = (Images:any, index: number) => {
+const imgDetail = (Images:[], index: number) => {
 
-useEffect(() => {
-  console.log(Images)
-},[])
 
   return (
     <div className="footer">
       <div
         className="footerButton"
       >
-        {
-          Images.length > 0 ? <div></div> : <div>zzzzz</div>
-        }
+        {index}
       </div>
     </div>
   )

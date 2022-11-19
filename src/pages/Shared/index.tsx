@@ -1,7 +1,7 @@
 import './index.scss';
 import { AddCircleOutline, AppOutline, UnorderedListOutline } from 'antd-mobile-icons'
 import { Space, Image, ImageViewer, Dialog, ImageUploader, ImageUploadItem, PullToRefresh, TextArea, TabBar, Badge, DotLoading } from 'antd-mobile'
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { sleep } from '../../utils/sleep';
 import imgDetail from '../../components/imgDetail';
 import { PostSharedAddApi, GetSharedAllApi } from '../../axios/api';
@@ -15,6 +15,7 @@ const Shared = () => {
     'https://images.unsplash.com/photo-1567945716310-4745a6b7844b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=60'
 
   const [Images,setImages] = useState<[]>([]);
+  const [imgIndex,setImgIndex] = useState<number>(0);
 
   const tabs = [
     {
@@ -35,6 +36,7 @@ const Shared = () => {
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
   const [disabled,setDisabled] = useState(false);
+  const testRef = useRef(null);
 
   //上传的图片
   const [fileList, setFileList] = useState<ImageUploadItem[]>([
@@ -92,6 +94,13 @@ const Shared = () => {
     }
   }
 
+  //指定从第几张图开始看
+  const LookPhoto = async (index:number) => {
+    await testRef.current.swipeTo(index);
+    setVisible2(true);
+  }
+
+
   return (
     <div className='shared'>
       <div className='hd'>
@@ -112,9 +121,9 @@ const Shared = () => {
             <Space wrap>
               {
                 Images.length === 0 ? <DotLoading /> : 
-                  Images.map((item:any) => {
+                  Images.map((item:any,index:number) => {
                     return(
-                      <Image lazy src={item.img} key={item.id} onClick={() => setVisible2(true)} />
+                      <Image lazy src={item.img} key={item.id} onClick={() => LookPhoto(index)} />
                     )
                   })
               }
@@ -129,16 +138,17 @@ const Shared = () => {
           ))}
         </TabBar>
       <ImageViewer.Multi
+        ref={testRef}
         images={
           Images.map((item:any) => {
             return item.img
           })
         }
         visible={visible2}
-        defaultIndex={1}
         onClose={() => {
           setVisible2(false)
         }}
+        defaultIndex={imgIndex}
         renderFooter={() => imgDetail(Images)}
       />
       <Dialog
