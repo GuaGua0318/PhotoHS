@@ -15,7 +15,7 @@ const Shared = () => {
     'https://images.unsplash.com/photo-1567945716310-4745a6b7844b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=60'
 
   const [Images,setImages] = useState<[]>([]);
-  const [imgIndex,setImgIndex] = useState<number>(0);
+  const info = JSON.parse(localStorage.getItem('info'));
 
   const tabs = [
     {
@@ -55,13 +55,15 @@ const Shared = () => {
 
   //确定上传
   interface Photo{
-    img: String,
-    detail: String
+    img: string,
+    detail: string
+    username: string
   }
   const handleUpload = () => {
     let photo : Photo = {
       img:demoSrc,
-      detail:value
+      detail:value,
+      username:info.username
     }
     PostSharedAddApi(photo).then((res:any) => {
       AllPhoto();
@@ -148,7 +150,6 @@ const Shared = () => {
         onClose={() => {
           setVisible2(false)
         }}
-        defaultIndex={imgIndex}
         renderFooter={() => imgDetail(Images)}
       />
       <Dialog

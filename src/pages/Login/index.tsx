@@ -19,7 +19,7 @@ const Login = () => {
       let token = res.data.data.token;
       let info = res.data.data.info;
       localStorage.setItem('token',token);
-      localStorage.setItem('info',JSON.stringify(info));
+      localStorage.setItem('info',JSON.stringify(info))
       navigate('/shared');
     }).catch(() => {
       Toast.show({
@@ -69,7 +69,6 @@ const Login = () => {
           </Button>
         }
         form={form}
-        onValuesChange={(value) => console.log(value)}
         onFinish={() => login()}
       >
         <Form.Item label='用户名' name='username' rules={[{required: true, message: '请输入用户名'}]}>
