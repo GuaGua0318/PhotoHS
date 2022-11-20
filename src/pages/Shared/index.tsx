@@ -15,7 +15,7 @@ const Shared = () => {
     'https://images.unsplash.com/photo-1567945716310-4745a6b7844b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=60'
 
   const [Images,setImages] = useState<[]>([]);
-  let info: any = localStorage.getItem("info");
+  let info:any = localStorage.getItem('info');
   info = JSON.parse(info);
 
   const tabs = [
@@ -37,7 +37,7 @@ const Shared = () => {
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
   const [disabled,setDisabled] = useState(false);
-  const testRef:any = useRef(null);
+  const testRef = useRef<any>(null);
 
   //上传的图片
   const [fileList, setFileList] = useState<ImageUploadItem[]>([

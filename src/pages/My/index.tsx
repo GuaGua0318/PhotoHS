@@ -13,9 +13,8 @@ const My = () => {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
-  let info: any = localStorage.getItem("info");
+  let info:any = localStorage.getItem('info');
   info = JSON.parse(info);
-  // const info = JSON.parse(localStorage.getItem('info'));
   const [Images,setImages] = useState<[]>([]);
   const [ImagesP,setImagesP] = useState<[]>([]);
   const testRef = useRef<any>(null);
