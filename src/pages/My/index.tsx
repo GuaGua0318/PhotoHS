@@ -221,7 +221,6 @@ const My = () => {
         onClose={() => {
           setVisible(false)
         }}
-        renderFooter={imgDetail}
       />
       <Dialog
         visible={visible2}
