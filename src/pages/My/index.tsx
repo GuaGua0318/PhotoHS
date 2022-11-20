@@ -13,10 +13,12 @@ const My = () => {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
-  const info = JSON.parse(localStorage.getItem('info'));
+  let info: any = localStorage.getItem("info");
+  info = JSON.parse(info);
+  // const info = JSON.parse(localStorage.getItem('info'));
   const [Images,setImages] = useState<[]>([]);
   const [ImagesP,setImagesP] = useState<[]>([]);
-  const testRef = useRef(null);
+  const testRef = useRef<any>(null);
   const [disabled,setDisabled] = useState(false);
 
   
@@ -219,7 +221,7 @@ const My = () => {
         onClose={() => {
           setVisible(false)
         }}
-        renderFooter={() => imgDetail(Images)}
+        renderFooter={imgDetail}
       />
       <Dialog
         visible={visible2}
