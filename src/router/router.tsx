@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import Login from "../pages/Login";
 import My from "../pages/My";
 import Shared from "../pages/Shared";
@@ -9,11 +10,16 @@ const routers = [
   },
   {
     path:"/shared",
-    element:<Shared/>
+    element:<Shared/>,
   },
   {
     path:"/my",
-    element:<My/>
+    element:<My/>,
+  },
+  {
+    path:"/",
+    element:<Navigate to="/login"/>,
+
   }
 ]
 

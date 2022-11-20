@@ -15,3 +15,8 @@ export const GetSharedAllApi = () => request.get('/shared/all');
 //请求当前用户所有共享图片
 export const PostMySharedAllApi = (params:unknown) => request.post('/shared/myshared',params);
 
+//请求私密照片
+export const PostPrivateApi = (params:unknown) => request.post('/private/all',params);
+
+//上传私密照片
+export const PostPrivateAddApi = (params:unknown) => request.post('/private/add',params);

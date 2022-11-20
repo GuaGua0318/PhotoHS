@@ -45,5 +45,14 @@
         --adm-image-height: 100px;
       }
     }
+    .box{
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translate(-50%);
+      .add{
+        --border-radius:50%;
+      }
+    }
   }
 }

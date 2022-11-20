@@ -71,6 +71,10 @@ const Shared = () => {
   }
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if(!token){
+      navigate('/login');
+    }
     if(fileList.length < 1){
       setDisabled(true);
     }

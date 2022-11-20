@@ -1,19 +1,25 @@
-import { Badge, PullToRefresh, Space, TabBar, Tabs, Image, Avatar, ImageViewer, DotLoading, Button } from 'antd-mobile';
-import { AppOutline, UnorderedListOutline } from 'antd-mobile-icons';
+import { Badge, PullToRefresh, Space, TabBar, Tabs, Image, Avatar, ImageViewer, DotLoading, Button, ImageUploader, ImageUploadItem, Dialog } from 'antd-mobile';
+import { AddOutline, AppOutline, UnorderedListOutline } from 'antd-mobile-icons';
 import './index.scss';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import imgDetail from '../../components/imgDetail';
-import { PostMySharedAllApi } from '../../axios/api';
+import { PostMySharedAllApi, PostPrivateAddApi, PostPrivateApi } from '../../axios/api';
+import { sleep } from '../../utils/sleep';
 
 
 const My = () => {
 
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
   const info = JSON.parse(localStorage.getItem('info'));
   const [Images,setImages] = useState<[]>([]);
+  const [ImagesP,setImagesP] = useState<[]>([]);
   const testRef = useRef(null);
+  const [disabled,setDisabled] = useState(false);
+
+  
 
 
   const demoSrc =
@@ -34,7 +40,15 @@ const My = () => {
     },
   ]
 
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if(!token){
+      navigate('/login');
+      return;
+    }
+    AllMyPhoto();
+    AllMyPhoto();
+  },[])
 
   //切换tabbar
   const changeTab = (key:unknown) => {
@@ -53,9 +67,9 @@ const My = () => {
     })
   }
 
-  useEffect(() => {
-    AllMyPhoto();
-  },[]);
+  // useEffect(() => {
+  //   AllMyPhoto();
+  // },[]);
 
   //指定从第几张图开始看
   const LookPhoto = async (index:number) => {
@@ -69,16 +83,59 @@ const My = () => {
     localStorage.removeItem('info');
     navigate('/login');
   }
+  
+  //上传的图片
+  const [fileList, setFileList] = useState<ImageUploadItem[]>([
+    {
+      url: demoSrc
+    },
+  ])
+  //上传图片
+  async function mockUpload(file: File) {
+    await sleep(3000)
+    return {
+      url: URL.createObjectURL(file),
+    }
+  }
+
+  // useEffect(() => {
+  //   AllPhoto();
+  // })
+
+  //请求私密照片
+  const AllPhoto = () => {
+    interface Username{
+      username: string
+    }
+    const username : Username = {
+      username:info.username
+    }
+    PostPrivateApi(username).then((res:any) => {
+      setImagesP(res.data.data)
+    })
+  }
+
+  //上传私密照片
+  const handleUpload = () => {
+    interface ImgUrl{
+      username: string,
+      img: string
+    }
+    const imgUrl : ImgUrl =  {
+      username:info.username,
+      img: demoSrc
+    }
+    PostPrivateAddApi(imgUrl).then((res:any) => {
+      AllPhoto();
+    })
+  }
 
     return(
       <div className='my'>
         <div className='hd'>
           我的
         </div>
-        <div className='detail'>
-          {/* <div className='avator'>
-            
-          </div> */}
+        {/* <div className='detail'>
           <Avatar src={info.avator} />
           <p className='nick'>{info.nickname}</p>
           <div className='logout'>
@@ -86,7 +143,18 @@ const My = () => {
             退出登录
           </Button>
           </div>
-        </div>
+        </div> */}
+        {
+          info ? <div className='detail'>
+          <Avatar src={info.avator} />
+          <p className='nick'>{info.nickname}</p>
+          <div className='logout'>
+          <Button color='primary' fill='outline' onClick={() => logout()}>
+            退出登录
+          </Button>
+          </div>
+        </div> : <div>aaa</div>
+        }
         <div className='photo'>
         <Tabs>
           <Tabs.Tab title='共享' key='fruits'>
@@ -112,55 +180,23 @@ const My = () => {
             <PullToRefresh>
               <div className="imagesContainer">
                 <Space wrap>
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
-                  <Image lazy src={demoSrc} />
+                  {
+                    ImagesP.length === 0 ? <DotLoading /> : 
+                    ImagesP.map((item:any,index:number) => {
+                      return(
+                        <Image lazy src={item.img} key={item.id} onClick={() => LookPhoto(index)} />
+                      )
+                    })
+                  }
                 </Space>
               </div>
             </PullToRefresh>
-        </div>
+          </div>
+          <div className='box'>
+          <Button block color='primary' size='large' className='add' onClick={() => setVisible2(true)}>
+            <AddOutline fontSize={26}/>
+          </Button>
+          </div>
           </Tabs.Tab>
         </Tabs>
         <div>
@@ -184,6 +220,27 @@ const My = () => {
           setVisible(false)
         }}
         renderFooter={() => imgDetail(Images)}
+      />
+      <Dialog
+        visible={visible2}
+        content={<ImageUploader
+                 value={fileList}
+                 onChange={setFileList}
+                 upload={mockUpload}
+               />}
+        closeOnAction
+        closeOnMaskClick
+        onClose={() => {
+          setVisible2(false)
+        }}
+        actions={[
+          {
+            key: 'confirm',
+            text: '确认发布',
+            onClick:() => handleUpload(),
+            disabled:disabled
+          },
+        ]}
       />
       </div>
   )
