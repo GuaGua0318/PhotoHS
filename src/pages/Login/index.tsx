@@ -59,6 +59,7 @@ const Login = () => {
   return (
     <Fragment>
      <Bg/>
+     1
      {
       isLogin === true ? <div className='login'>
       <Form 
