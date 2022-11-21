@@ -32,13 +32,14 @@ const Login = () => {
   //注册
   const register = () => {
     let user = form.getFieldsValue();
-    PostRegisterApi({...user,avator:avator,nickname:"guagua"}).then((res:unknown) => {
+    PostRegisterApi({...user,"avator":avator,"nickname":"guagua"}).then((res:unknown) => {
       toLogin();
       Toast.show({
         icon: 'success',
         content: '注册成功，请登录'
       })
-    }).catch(() => {
+    }).catch((err) => {
+      console.log(err)
       Toast.show({
         icon: 'fail',
         content: '用户名已经注册',

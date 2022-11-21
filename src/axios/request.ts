@@ -2,7 +2,8 @@ import axios from "axios";
 
 //创建一个实例
 const instance = axios.create({
-  baseURL:'http://localhost:3000'
+  // baseURL:'http://localhost:3000'
+  baseURL:'http://123.249.12.81:3000'
 })
 
 //拦截器-请求拦截
