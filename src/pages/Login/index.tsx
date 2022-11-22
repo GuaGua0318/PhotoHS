@@ -4,6 +4,7 @@ import { Fragment, useState } from 'react';
 import Bg from '../../components/ui/Bg';
 import { PostLoginApi, PostRegisterApi } from '../../axios/api';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
 
@@ -55,6 +56,7 @@ const Login = () => {
   const toRegister = () =>{
     setIsLogin(false);
   }
+
 
   return (
     <Fragment>
