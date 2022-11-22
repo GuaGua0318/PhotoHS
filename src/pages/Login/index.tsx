@@ -4,7 +4,6 @@ import { Fragment, useState } from 'react';
 import Bg from '../../components/ui/Bg';
 import { PostLoginApi, PostRegisterApi } from '../../axios/api';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const Login = () => {
 
@@ -61,7 +60,6 @@ const Login = () => {
   return (
     <Fragment>
      <Bg/>
-     1
      {
       isLogin === true ? <div className='login'>
       <Form 
